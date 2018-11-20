@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitecatalog xmlns="http://pegasus.isi.edu/schema/sitecatalog"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://pegasus.isi.edu/schema/sitecatalog http://pegasus.isi.edu/schema/sc-4.0.xsd"
+             version="4.0">
+
+    <site  handle="local" arch="x86_64">
+        <directory type="shared-scratch" path="$RUN_DIR/scratch">
+            <file-server operation="all" url="file://$RUN_DIR/scratch"/>
+        </directory>
+        <directory type="local-storage" path="$OUT_DIR/outputs">
+            <file-server operation="all" url="file://$OUT_DIR/outputs"/>
+        </directory>
+    </site>
+
+    <site  handle="condor_pool" arch="x86_64" os="LINUX">
+        <profile namespace="pegasus" key="style" >condor</profile>
+        <profile namespace="condor" key="universe" >vanilla</profile>
+	<profile namespace="condor" key="request_cpus" >6</profile>
+	<profile namespace="condor" key="request_memory" >12 GB</profile>
+        <profile namespace="condor" key="requirements" >(has_sse4_2 == True &amp;&amp; has_avx == True) &amp;&amp; (regexp("isi.edu", Machine) || HAS_SINGULARITY == True) &amp;&amp; regexp("mwt2", Machine) == False</profile>
+	<profile namespace="condor" key="+SingularityImage" >"/cvmfs/singularity.opensciencegrid.org/ankushumn/rsatest:latest"</profile>
+	<profile namespace="condor" key="+ProjectName" >"mint"</profile>
+    </site>
+
+ <site  handle="condor_pool_small" arch="x86_64" os="LINUX">
+        <profile namespace="pegasus" key="style" >condor</profile>
+        <profile namespace="condor" key="universe" >vanilla</profile>
+        <profile namespace="condor" key="request_cpus" >1</profile>
+        <profile namespace="condor" key="request_memory" >5 GB</profile>
+        <profile namespace="condor" key="requirements" >(has_sse4_2 == True &amp;&amp; has_avx == True) &amp;&amp; (regexp("isi.edu", Machine) || HAS_SINGULARITY == True) &amp;&amp; regexp("mwt2", Machine) == False</profile>
+        <profile namespace="condor" key="+SingularityImage" >"/cvmfs/singularity.opensciencegrid.org/ankushumn/rsatest:latest"</profile>
+        <profile namespace="condor" key="+ProjectName" >"mint"</profile>
+    </site>
+
+
+
+</sitecatalog>
