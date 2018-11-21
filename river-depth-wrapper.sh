@@ -7,16 +7,9 @@ export KERAS_BACKEND=tensorflow
 export PYTHONPATH=/opt/conda/envs/gdalenv/lib/python2.7/site-packages/
 tar -xzf $1 -C $PWD
 tar -xzf $2 -C $PWD
-ls 
-mkdir $maindir/ZIPs
-mkdir $maindir/Boxes
-cd scripts
-python ParseXML.py $maindir/data/$3 $4 $5 credentials.txt 
-python ClipZip.py $maindir/data/$3 $maindir/ZIPs/ credentials.txt $maindir/Boxes/ $7
-cd ..
+tar -xzf $3.tar.gz -C $PWD
 
-for cdir in $maindir/Boxes/*/
-do
-	boxname=$(basename $cdir)
-	tar -czf $maindir/$boxname.tar.gz -C $maindir/Boxes/ $boxname/
-done
+cd scripts
+python ProcessZip_wrapper.py $maindir/$3/ $3.txt
+cd ..
+tar -czf $maindir/$4 -C $maindir/ $3

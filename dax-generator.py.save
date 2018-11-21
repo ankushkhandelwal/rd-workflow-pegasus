@@ -13,11 +13,11 @@ top_dir = os.getcwd()
 
 dax = ADAG('MINT')
 
-box_file = sys.argv[1] # Boxes.shp
-sdate = sys.argv[2] # 2017-01-01
-edate = sys.argv[3] # 2017-12-31
-box_list = sys.argv[4] # Boxes.txt
-job_name = sys.argv[5] # RiverTest1
+box_file = sys.argv[1] # example: Boxes.shp
+sdate = sys.argv[2] # example: 2017-01-01
+edate = sys.argv[3] # example: 2017-12-31
+box_list = sys.argv[4] # example: Boxes
+job_name = sys.argv[5]
 
 code_file = File('rd-main.tar.gz')
 code_file.addPFN(PFN('file://' + top_dir + '/generated/' + job_name + '/rd-main.tar.gz', site='local'))
@@ -47,7 +47,7 @@ for clip_tar,curID in clip_tars:
 	job.uses(clip_tar,link=Link.INPUT)
 	out_tar_file = File(job_name + '-' + str(int(curID)) + '-final.tar.gz')
         job.uses(out_tar_file, link=Link.OUTPUT, transfer=True)
-	job.addArguments(code_file,data_file,job_name + '-' + str(int(curID)),out_tar_file)
+	job.addArguments(code_file,data_file,job_name + str(int(curID)),out_tar_file)
 	dax.addJob(job)
 
 
